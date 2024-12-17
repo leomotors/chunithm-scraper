@@ -46,7 +46,7 @@ async function uploadMusic(
       score: score.score,
       difficulty: toStdDifficulty(score.difficulty),
       rating_type: ratingType,
-      music_order: index,
+      music_order: index + 1,
       level: level,
       rank: calculateRank(score.score),
       rating: calculateRating(score.score, level),

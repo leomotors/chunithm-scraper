@@ -33,6 +33,9 @@ export async function genImage(page: Page, tempFileLocation: string) {
   await page.locator("#player_data_file").click();
   await page.locator("#player_data_file").setInputFiles(tempFileLocation);
 
+  // Wait 5 Seconds
+  await page.waitForTimeout(5000);
+
   await page.getByRole("button", { name: "Generate" }).click();
 
   // Wait 5 Seconds

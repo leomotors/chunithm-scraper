@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.0.1] - 2024-12-18
+
+- fix bug
+
 ## [2.0.0] - 2024-12-18
 
 - Separate table for storing chart constant

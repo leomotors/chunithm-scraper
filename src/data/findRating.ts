@@ -11,7 +11,7 @@ export async function getInternalLevel(
   const result =
     await sql`SELECT level FROM chart_constant WHERE title = ${songTitle} AND difficulty = ${difficulty} AND version = ${version}`;
 
-  return result[0].level as number;
+  return +result[0].level;
 }
 
 export function calculateRank(score: number): PlayResultRank {
