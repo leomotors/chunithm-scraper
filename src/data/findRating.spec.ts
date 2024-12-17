@@ -1,22 +1,6 @@
 import { expect, test } from "vitest";
 
-import { StdChartDifficulty } from "../types.js";
-
-import {
-  calculateRank,
-  calculateRating,
-  getInternalLevel,
-} from "./findRating.js";
-
-test("Find Rating", () => {
-  const testCases: [string, StdChartDifficulty, number][] = [
-    ["祈 -我ら神祖と共に歩む者なり-", "master", 15.4],
-    ["携帯恋話", "master", 13.7],
-    ["神威", "master", 14.9],
-  ];
-
-  testCases.forEach((tc) => expect(getInternalLevel(tc[0], tc[1])).toBe(tc[2]));
-});
+import { calculateRank, calculateRating } from "./findRating.js";
 
 test("Calculate Rank", () => {
   const testCases: [number, string][] = [

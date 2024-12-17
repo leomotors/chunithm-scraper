@@ -4,7 +4,8 @@ import postgres from "postgres";
 import { environment } from "./environment.js";
 import { login } from "./steps/1-login.js";
 import { playerData } from "./steps/2-playerdata.js";
-import { music } from "./steps/3-music.js";
+import { qman } from "./steps/3-qman.js";
+import { genImage } from "./steps/4-genimage.js";
 
 const sql = postgres(environment.DATABASE_URL);
 
@@ -31,16 +32,23 @@ const step1Time = performance.now();
 console.log(`Step 1 Completed: Took ${Math.round(step1Time - start)}ms`);
 
 // * Step 2: Player Data
-await playerData(page, sql, jobId);
+const lastPlayed = await playerData(page, sql, jobId);
 
 const step2Time = performance.now();
 console.log(`Step 2 Completed: Took ${Math.round(step2Time - step1Time)}ms`);
 
-// * Step 3: Music for Rating
-await music(page, sql, jobId);
+// * Step 3: Qman
+const tempFileLocation = "./temp.json";
+await qman(page, sql, jobId, lastPlayed, tempFileLocation);
 
 const step3Time = performance.now();
 console.log(`Step 3 Completed: Took ${Math.round(step3Time - step2Time)}ms`);
+
+// * Step 4: Generate Image
+await genImage(page, tempFileLocation);
+
+const step4Time = performance.now();
+console.log(`Step 4 Completed: Took ${Math.round(step4Time - step3Time)}ms`);
 
 await sql.end();
 await browser.close();

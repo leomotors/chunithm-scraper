@@ -72,4 +72,6 @@ export async function playerData(page: Page, sql: Sql, jobId: number) {
     ${teamName},
     ${honorText}
   )`;
+
+  return lastPlayed;
 }

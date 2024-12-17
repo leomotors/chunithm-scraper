@@ -1,21 +1,17 @@
+import { Sql } from "postgres";
+
 import { PlayResultRank, StdChartDifficulty } from "../types.js";
 
-const dataUrl = "https://dp4p6x0xfi5o9.cloudfront.net/chunithm/data.json";
-
-console.log("Fetching Chart Data");
-
-const data = await fetch(dataUrl).then((res) => res.json());
-
-export const songs = data.songs;
-
-export function getInternalLevel(
+export async function getInternalLevel(
   songTitle: string,
   difficulty: StdChartDifficulty,
+  sql: Sql,
+  version: string,
 ) {
-  return (songs
-    .find((s) => s.title === songTitle)
-    ?.sheets.find((sh) => sh.difficulty === difficulty).internalLevelValue ??
-    0) as number;
+  const result =
+    await sql`SELECT level FROM chart_constant WHERE title = ${songTitle} AND difficulty = ${difficulty} AND version = ${version}`;
+
+  return result[0].level as number;
 }
 
 export function calculateRank(score: number): PlayResultRank {

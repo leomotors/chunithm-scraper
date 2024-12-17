@@ -1,6 +1,6 @@
 {
   "name": "chunithm-net-scraper",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "start": "bun src/index.ts",
@@ -10,10 +10,11 @@
   },
   "type": "module",
   "license": "MIT",
-  "packageManager": "pnpm@9.9.0",
   "dependencies": {
+    "discord-api-types": "^0.37.111",
     "dotenv-cli": "^7.4.2",
     "jsdom": "^25.0.0",
+    "papaparse": "^5.4.1",
     "playwright": "^1.46.1",
     "postgres": "^3.4.4",
     "zod": "^3.23.8"
