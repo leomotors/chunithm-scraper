@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.0] - 2024-12-25
+
+- fix: bug generating best songs image in headless mode
+- feat: scrape clear mark and full chain
+
 ## [2.0.1] - 2024-12-18
 
 - fix bug

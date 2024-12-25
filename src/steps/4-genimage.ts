@@ -33,13 +33,24 @@ export async function genImage(page: Page, tempFileLocation: string) {
   await page.locator("#player_data_file").click();
   await page.locator("#player_data_file").setInputFiles(tempFileLocation);
 
+  if (!process.env.DEBUG) {
+    // Headless
+    await page.waitForTimeout(500);
+
+    await page
+      .locator("#player_data_file")
+      .evaluate((el) =>
+        el.dispatchEvent(new Event("change", { bubbles: true })),
+      );
+  }
+
   // Wait 5 Seconds
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(500);
 
   await page.getByRole("button", { name: "Generate" }).click();
 
   // Wait 5 Seconds
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(1000);
 
   // Source as Base64
   const imgSrc = await page.getAttribute("#result-img", "src");

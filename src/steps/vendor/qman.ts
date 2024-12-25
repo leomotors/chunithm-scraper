@@ -73,25 +73,37 @@ export async function main() {
   const ratingsBestUrl = ratingsUrlBase + "ratingDetailBest/"; // ベスト枠
   const ratingsRecentUrl = ratingsUrlBase + "ratingDetailRecent/"; // リーセント枠
   const ratingsNextUrl = ratingsUrlBase + "ratingDetailNext/"; // 候補楽曲
-  const playerData = {} as any;
+  const playerData = {} as {
+    honor: string;
+    name: string;
+    rating: number;
+    ratingMax: number;
+    updatedAt: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    best: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    recent: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    candidate: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    score: any[];
+  };
 
   // location check
   if (
     location.hostname !== "new.chunithm-net.com" &&
     location.hostname !== "chunithm-net-eng.com"
   ) {
-    alert(
+    throw new Error(
       "このページでは実行できません。 You can't run this script on this page.",
     );
-    return;
   }
 
   const homeDoc = await fetchPageDoc(homeUrl);
   if (homeDoc.querySelector(".player_honor_text") === null) {
-    alert(
+    throw new Error(
       "CHUNITHM-NETにログインし、Aimeカードを選択してから実行してください。 Please login to CHUNITHM-NET and select your Aime card.",
     );
-    return;
   }
 
   const UiBase = document.body.appendChild(document.createElement("div"));
@@ -153,7 +165,7 @@ export async function main() {
   // フォーム取得
   const form = preDoc.getElementsByTagName("form")[0];
   const formData = new FormData(form);
-  formData.set("genre", 99);
+  formData.set("genre", "99");
   formData.set("token", token);
 
   for (let i = 0; i < difficulties.length; i++) {
@@ -180,6 +192,8 @@ export async function main() {
       }
       let isAllJustice = false;
       let isFullCombo = false;
+      let clearMark = "NONE";
+      let fullChain = 0;
       const lampImgsDiv = forms[j].querySelector(".play_musicdata_icon");
       if (lampImgsDiv !== null) {
         const lampImgs = forms[j]
@@ -187,6 +201,20 @@ export async function main() {
           .querySelectorAll("img");
         for (let k = 0; k < lampImgs.length; k++) {
           const src = lampImgs[k].src;
+          // Clear Mark
+          if (src.includes("icon_clear.png")) {
+            clearMark = "CLEAR";
+          } else if (src.includes("icon_hard.png")) {
+            clearMark = "HARD";
+          } else if (src.includes("icon_absolute.png")) {
+            clearMark = "ABSOLUTE";
+          } else if (src.includes("icon_absolutep.png")) {
+            clearMark = "ABSOLUTE+";
+          } else if (src.includes("icon_catastrophy.png")) {
+            clearMark = "CATASTROPHY";
+          }
+
+          // FC/AJ
           if (src.includes("alljustice")) {
             isAllJustice = true;
             isFullCombo = true;
@@ -194,6 +222,13 @@ export async function main() {
           } else if (src.includes("fullcombo")) {
             isFullCombo = true;
             break;
+          }
+
+          // Full Chain
+          if (src.includes("icon_fullchain2.png")) {
+            fullChain = 1;
+          } else if (src.includes("icon_fullchain.png")) {
+            fullChain = 2;
           }
         }
       }
@@ -204,6 +239,8 @@ export async function main() {
         score: score,
         isAllJustice: isAllJustice,
         isFullCombo: isFullCombo,
+        clearMark: clearMark,
+        fullChain: fullChain,
       });
     }
 
@@ -340,6 +377,7 @@ export async function main() {
   const closer = UiBase.appendChild(document.createElement("button"));
   closer.id = "closer";
   closer.textContent = engMode ? "Close" : "閉じる";
+  // @ts-expect-error i have no idea what this guy is doing
   closer.style =
     "display: block; margin: 0 auto; padding: 5px 10px; font-size: 1.2rem; border: none; border-radius: 5px; background-color: rgb(13, 155, 13); color: #fff; cursor: pointer;";
   UiBase.querySelector("#closer").addEventListener("click", () =>

@@ -1,6 +1,6 @@
 {
   "name": "chunithm-net-scraper",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "start": "bun src/index.ts",
@@ -11,28 +11,26 @@
   "type": "module",
   "license": "MIT",
   "dependencies": {
-    "discord-api-types": "^0.37.111",
-    "dotenv-cli": "^7.4.2",
-    "jsdom": "^25.0.0",
+    "discord-api-types": "^0.37.114",
+    "dotenv-cli": "^8.0.0",
+    "jsdom": "^25.0.1",
     "papaparse": "^5.4.1",
-    "playwright": "^1.46.1",
-    "postgres": "^3.4.4",
-    "zod": "^3.23.8"
+    "playwright": "^1.49.1",
+    "postgres": "^3.4.5",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.9.1",
-    "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
-    "@types/eslint": "^9.6.1",
-    "@types/eslint__js": "^8.42.3",
+    "@eslint/js": "^9.17.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "@types/jsdom": "^21.1.7",
-    "@vitest/coverage-v8": "^2.0.5",
-    "bun-types": "^1.1.26",
-    "eslint": "^9.9.1",
+    "@vitest/coverage-v8": "^2.1.8",
+    "bun-types": "^1.1.42",
+    "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "prettier": "^3.3.3",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.3.0",
-    "vitest": "^2.0.5"
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.2",
+    "vitest": "^2.1.8"
   }
 }

@@ -81,7 +81,7 @@ export async function qman(
   await uploadMusic(sql, result.candidate, jobId, "selection");
 
   for (const score of result.score) {
-    await sql`INSERT INTO chart_score (job_id, title, difficulty, score, fc, aj, updated_at) VALUES (${jobId}, ${score.title}, ${toStdDifficulty(score.difficulty)}, ${score.score}, ${score.isFullCombo}, ${score.isAllJustice}, ${lastPlayed}) ON CONFLICT DO NOTHING`;
+    await sql`INSERT INTO chart_score (job_id, title, difficulty, score, fc, aj, clear_mark, full_chain, updated_at) VALUES (${jobId}, ${score.title}, ${toStdDifficulty(score.difficulty)}, ${score.score}, ${score.isFullCombo}, ${score.isAllJustice}, ${score.clearMark}, ${score.fullChain}, ${lastPlayed}) ON CONFLICT DO NOTHING`;
   }
 
   await Bun.write(tempFileLocation, JSON.stringify(result));

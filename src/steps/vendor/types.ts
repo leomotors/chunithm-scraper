@@ -8,6 +8,11 @@ export type QmanScore = {
   isFullCombo: boolean;
 };
 
+export type QmanDetailedScore = QmanScore & {
+  clearMark: string;
+  fullChain: number;
+};
+
 export function toStdDifficulty(
   qmanDiff: QmanScore["difficulty"],
 ): StdChartDifficulty {
@@ -34,5 +39,5 @@ export type QmanData = {
   best: QmanScore[];
   recent: QmanScore[];
   candidate: QmanScore[];
-  score: QmanScore[];
+  score: QmanDetailedScore[];
 };

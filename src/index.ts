@@ -19,6 +19,7 @@ const start = performance.now();
 
 const browser = await chromium.launch({
   headless: !process.env.DEBUG,
+  args: ["--disable-blink-features=AutomationControlled", "--start-maximized"],
 });
 
 const page = await browser.newPage();
